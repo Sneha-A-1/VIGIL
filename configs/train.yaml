@@ -1,0 +1,46 @@
+# Training configuration shared by VIGIL and the neural baselines.
+train:
+  weather: power          # weather covariates used for training (NASA POWER)
+  iters: 300              # optimisation steps (batches)
+  batch: 16               # windows per batch
+  window: 168             # hours with gradients per window (truncated BPTT length)
+  warm: 72                # burn-in hours (no gradients) before each window
+  lr: 0.002
+  weight_decay: 0.00001
+  clip: 1.0
+  eval_every: 25
+  select_after: 100       # checkpoints are selected on validation MSE from this iteration on
+  val_windows: 32         # fixed validation windows (2014), round-robin polling
+  budgets: [1, 2, 3, 4, 6, 8]   # polls per hour sampled per training window
+  max_age: 168            # freshness guard (hours)
+  closed_loop_start: 60   # iterations before the model's own VoI policy enters the policy mix
+  policy_mix: {random: 0.35, rr: 0.15, voi: 0.5}
+
+vigil:
+  hidden: 48
+  node_emb: 0             # no free per-node embeddings (static covariates describe each logger)
+  use_graph: true
+  use_adaptive: true
+  predict_update: true
+  hetero: true            # beta-NLL heteroscedastic loss (false -> MSE)
+  beta: 1.0               # beta-NLL exponent (1.0: mean gradients equal to MSE)
+  w_event: 0.0            # optional BCE event head (off: event probabilities follow from the Gaussian nowcast)
+  w_look: 1.0             # weight of the 24-h look-ahead (persistent-uncertainty) heads
+  closed_loop: true       # train on trajectories induced by the network's own VoI policy
+
+baselines:
+  mlp: {hidden: 128}
+  gru: {hidden: 48}
+  dcrnn: {hidden: 48}
+  transformer: {hidden: 48, window: 48, layers: 2, heads: 4}
+  gwn: {hidden: 32, dilations: [1, 2, 4, 8, 16]}
+
+# Ablation variants of VIGIL (merged into the default configuration)
+variants:
+  no_graph: {vigil: {use_graph: false}}
+  no_predict_update: {vigil: {predict_update: false}}
+  no_hetero: {vigil: {hetero: false}}
+  no_closed_loop: {vigil: {closed_loop: false}}
+  no_lookahead:
+    vigil: {w_look: 0.0}
+    train: {policy_mix: {random: 0.35, rr: 0.15, voi: 0.0, voi_myopic: 0.5}}

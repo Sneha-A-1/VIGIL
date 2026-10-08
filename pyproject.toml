@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vigil"
+version = "1.0.0"
+description = "VIGIL: value-of-information-guided neural graph filtering for budgeted soil-sensor retrieval and urgency-aware edge-cloud processing"
+requires-python = ">=3.10"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

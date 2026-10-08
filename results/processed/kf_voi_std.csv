@@ -1,0 +1,5 @@
+estimator,policy,k,eta,weather,rmse,mae,rmse_unobs,frac_polled_channels,rmse_d0,rmse_d1,rmse_d2,rmse_d3,rmse_d4,crps_unobs,cov90_unobs,cov50_unobs,polls_per_hour,rmse_wet,hours_wet,rmse_dry,hours_dry,ev_rule_auprc,ev_rule_event_rate,ev_rule_f1_hourly,ev_rule_precision_hourly,ev_rule_recall_hourly,ev_rule_n_onsets,ev_rule_onset_recall,ev_rule_recall_6h,ev_rule_recall_24h,ev_rule_median_delay_h,ev_rule_mean_delay_h,ev_rule_alert_episodes,ev_rule_alert_precision,ev_rule_false_alerts_per_day,ev_rule_tau,ev_head_auprc,ev_head_event_rate,ev_head_f1_hourly,ev_head_precision_hourly,ev_head_recall_hourly,ev_head_n_onsets,ev_head_onset_recall,ev_head_recall_6h,ev_head_recall_24h,ev_head_median_delay_h,ev_head_mean_delay_h,ev_head_alert_episodes,ev_head_alert_precision,ev_head_false_alerts_per_day,ev_head_tau,sigma_scale,kappa,eval_seconds_chunk,chunk_rows
+kf,kfvoi,1,0.5,power,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+kf,kfvoi,2,0.5,power,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+kf,kfvoi,4,0.5,power,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+kf,kfvoi,8,0.5,power,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

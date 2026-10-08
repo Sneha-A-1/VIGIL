@@ -1,0 +1,46 @@
+# Evaluation grids (closed loop; test period 2015-01-01 .. 2016-06-16; alert thresholds from 2014).
+# kappa: "tuned" -> value selected on the validation year by scripts/tune_policy.py
+seeds: [0, 1, 2, 3, 4]
+budgets: [1, 2, 4, 8]          # polls per hour (of 42 loggers)
+eta: 0.5                       # urgent/strategic weight of the VoI index (fixed a priori)
+kappa: tuned
+
+groups:
+  estimators:                  # E1: estimators under the same round-robin polling schedule
+    estimators: [locf, kf, lgbm, mlp, gru, transformer, dcrnn, gwn, vigil]
+    policies: [rr]
+  policies:                    # E2: polling policies with the VIGIL estimator
+    estimators: [vigil]
+    policies: [random, ars, voi, oracle]
+  kf_pipeline:                 # classical pipeline: rain-conditioned Kalman filter + greedy A-optimal polling
+    estimators: [kf]
+    policies: [kfgreedy]
+    seeds: [0]
+  kf_voi:                      # the VIGIL polling index applied to the Rain-KF predictive distributions
+    estimators: [kf]
+    policies: [kfvoi]
+    seeds: [0]
+  baseline_ars:                # strongest baseline estimators with the adaptive-rate heuristic
+    estimators: [lgbm, gwn]
+    policies: [ars]
+  tradeoff:                    # E3: urgent/strategic weight eta of the VoI index
+    estimators: [vigil]
+    policies: [voi]
+    eta_grid: [0.0, 0.25, 0.75, 1.0]
+    budgets: [2, 4]
+  policy_ablations:            # E4a: components of the polling rule
+    estimators: [vigil]
+    policies: [voi_greedy, voi_myopic, voi_nokappa]
+    budgets: [2, 4]
+  ablations:                   # E4b: components of the network (3 seeds)
+    estimators: [vigil-no_graph, vigil-no_predict_update, vigil-no_hetero, vigil-no_closed_loop,
+                 vigil-no_lookahead]
+    policies: [rr, voi]
+    seeds: [0, 1, 2]
+    budgets: [2, 4]
+  weather:                     # E5: on-farm station (SCAN) vs gridded (POWER) weather at test time
+    estimators: [vigil]
+    policies: [rr, voi]
+    budgets: [2, 4]
+    weather: [power, scan]
+    test_limit: ["2015-01-01 00:00", "2016-01-05 11:00"]

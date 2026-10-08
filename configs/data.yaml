@@ -1,0 +1,32 @@
+# Data pipeline configuration
+paths:
+  caf_dir: caf/extracted            # unzipped CAF_Sensor_Dataset.zip
+  power_csv: power/POWER_hourly_2011-2016.csv
+  scan_csv: scan/SCAN2198_hourly_2013-2016.csv
+  bitbrains_dir: bitbrains/extracted/2013-8
+  processed: data/processed         # output folder (relative to the repository root)
+
+study:
+  start: "2011-01-01 00:00"
+  end: "2016-06-16 23:00"
+  train_end: "2013-12-31 23:00"     # train: 2011-01-01 .. 2013-12-31
+  val_end: "2014-12-31 23:00"       # validation: 2014; test: 2015-01-01 .. 2016-06-16
+
+depths_cm: [30, 60, 90, 120, 150]
+
+qc:
+  vwc_range: [0.0, 0.6]             # Dorigo et al. (2013) plausibility range, as in the CAF QC code
+  drop_negative_temperature: true   # CAF QC flags T < 0 C as dubious
+  use_flag_files: [spikes, breaks]  # 'flats' deliberately not applied 
+
+weather:
+  precip_windows_h: [6, 24, 72, 168]
+  radiation_window_h: 24
+
+graph:
+  knn: 6                            # spatial neighbours per logger
+  kernel_bandwidth: auto            # Gaussian kernel width = std of kNN distances
+
+events:
+  wetting_delta: 0.02               # m3/m3 rise above the trailing 24-h minimum (every channel)
+  wetting_window_h: 24

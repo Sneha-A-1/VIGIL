@@ -1,0 +1,18 @@
+# raw and processed data are downloaded / regenerated (see data/README.md)
+data/raw/
+data/processed/*.npz
+__pycache__/
+*.pyc
+*.egg-info/
+.ipynb_checkpoints/
+# LaTeX build products
+manuscript/*.aux
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.log
+manuscript/*.out
+manuscript/*.spl
+manuscript/*.toc
+manuscript/*.fls
+manuscript/*.fdb_latexmk
+results/raw/capacity/bitbrains_grid.npz

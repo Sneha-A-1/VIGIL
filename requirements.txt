@@ -1,0 +1,12 @@
+# Versions used for the results in the paper (Python 3.13, CPU only)
+torch==2.14.1
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+scikit-learn==1.9.1
+lightgbm==4.7.0
+PyYAML==6.0.3
+matplotlib==3.11.2
+pyshp==3.1.6
+tifffile==2026.9.15
+imagecodecs==2026.8.16
